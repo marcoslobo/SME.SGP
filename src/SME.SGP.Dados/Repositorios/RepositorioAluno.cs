@@ -5,18 +5,20 @@ using Npgsql;
 using SME.SGP.Dominio;
 using SME.SGP.Dominio.Repositorios;
 using System.Collections.Generic;
+using System.Data;
 
 namespace SME.SGP.Dados.Repositorios
 {
     public class RepositorioAluno : IRepositorioAluno
     {
         private NpgsqlConnection connection;
+        private IDbConnection connection2;
 
         public RepositorioAluno(IConfiguration configuration)
         {
-            connection = new NpgsqlConnection(configuration.GetConnectionString("SGP-Postgres"));
-
-            connection.Open();
+            //connection = new NpgsqlConnection(configuration.GetConnectionString("SGP-Postgres"));
+            connection2 = new NpgsqlConnection(configuration.GetConnectionString("SGP-Postgres"));
+            connection2.Open();
         }
 
         public IEnumerable<Aluno> Listar()
@@ -28,7 +30,7 @@ namespace SME.SGP.Dados.Repositorios
 
         public void Salvar(Aluno aluno)
         {
-            connection.Insert<Aluno>(aluno);
+            connection2.Insert<Aluno>(aluno);
         }
     }
 }

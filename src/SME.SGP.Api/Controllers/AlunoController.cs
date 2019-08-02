@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SME.SGP.Api.Filtros;
 using SME.SGP.Dominio.Repositorios;
 using SME.SGP.Dto;
 
@@ -6,6 +7,7 @@ namespace SME.SGP.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/alunos")]
+    [ValidaDto]
     public class AlunoController : ControllerBase
     {
         private readonly IRepositorioAluno repositorioAluno;

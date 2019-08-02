@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SME.SGP.Api.Filtros;
+using SME.SGP.Dados.Mapeamentos;
 using SME.SGP.IoC;
 
 namespace SME.SGP.Api
@@ -38,7 +39,12 @@ namespace SME.SGP.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IConfiguration>(Configuration);
+            RegistrarMapeamentos.Registrar();
             RegistraDependencias.Registrar(services);
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
             services.AddMvc(options =>
             {
                 options.AllowValidatingTopLevelNodes = false;
