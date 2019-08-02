@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SME.SGP.Dominio.Repositorios;
+using SME.SGP.Dto;
 
 namespace SME.SGP.Api.Controllers
 {
@@ -18,6 +19,13 @@ namespace SME.SGP.Api.Controllers
         public IActionResult Get()
         {
             return Ok(repositorioAluno.Listar());
+        }
+
+        [HttpPost]
+        public IActionResult Post(AlunoDto alunoDto)
+        {
+            repositorioAluno.Salvar(new Dominio.Aluno() { Nome = alunoDto.Nome });
+            return Ok();
         }
     }
 }

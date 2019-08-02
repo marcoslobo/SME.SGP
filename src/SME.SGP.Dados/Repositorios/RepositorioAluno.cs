@@ -21,14 +21,14 @@ namespace SME.SGP.Dados.Repositorios
 
         public IEnumerable<Aluno> Listar()
         {
-            var sql = @"SELECT * FROM public.ALUNOS";
+            var sql = @"SELECT * FROM ALUNO";
 
             return connection.Query<Aluno>(sql);
         }
 
         public void Salvar(Aluno aluno)
         {
-            connection.Insert(aluno);
+            connection.Insert<Aluno>(aluno);
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SME.SGP.Api.Filtros;
 using SME.SGP.IoC;
 
 namespace SME.SGP.Api
@@ -38,7 +39,12 @@ namespace SME.SGP.Api
         {
             services.AddSingleton<IConfiguration>(Configuration);
             RegistraDependencias.Registrar(services);
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options =>
+            {
+                options.AllowValidatingTopLevelNodes = false;
+                options.EnableEndpointRouting = true;
+                options.Filters.Add(new ValidaDtoAttribute());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
     }
 }
