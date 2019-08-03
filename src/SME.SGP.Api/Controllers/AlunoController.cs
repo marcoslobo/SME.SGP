@@ -2,6 +2,7 @@
 using SME.SGP.Api.Filtros;
 using SME.SGP.Dominio.Repositorios;
 using SME.SGP.Dto;
+using System;
 
 namespace SME.SGP.Api.Controllers
 {
@@ -26,7 +27,7 @@ namespace SME.SGP.Api.Controllers
         [HttpPost]
         public IActionResult Post(AlunoDto alunoDto)
         {
-            repositorioAluno.Salvar(new Dominio.Aluno() { Nome = alunoDto.Nome });
+            repositorioAluno.Salvar(new Dominio.Aluno() { Nome = alunoDto.Nome, Id = new Random(999).Next() });
             return Ok();
         }
     }

@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Dapper.Contrib.Extensions;
-using Microsoft.Extensions.Configuration;
 using Npgsql;
 using SME.SGP.Dominio;
 using SME.SGP.Dominio.Repositorios;
@@ -11,26 +10,27 @@ namespace SME.SGP.Dados.Repositorios
 {
     public class RepositorioAluno : IRepositorioAluno
     {
-        private NpgsqlConnection connection;
-        private IDbConnection connection2;
+        private IDbConnection connection;
 
-        public RepositorioAluno(IConfiguration configuration)
+        public RepositorioAluno(IDbConnection dbConnection)
         {
-            //connection = new NpgsqlConnection(configuration.GetConnectionString("SGP-Postgres"));
-            connection2 = new NpgsqlConnection(configuration.GetConnectionString("SGP-Postgres"));
-            connection2.Open();
+            connection = dbConnection;
         }
 
         public IEnumerable<Aluno> Listar()
         {
-            var sql = @"SELECT * FROM ALUNO";
+            var sql = "SELECT * FROM Alunos";
 
             return connection.Query<Aluno>(sql);
         }
 
         public void Salvar(Aluno aluno)
         {
-            connection2.Insert<Aluno>(aluno);
+            using (var connection2 = new NpgsqlConnection("User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=sgp_db;Pooling=true;"))
+            {
+                connection2.Open();
+                connection2.Insert(aluno);
+            }
         }
     }
 }

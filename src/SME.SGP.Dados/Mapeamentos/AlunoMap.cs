@@ -7,7 +7,8 @@ namespace SME.SGP.Dados.Mapeamentos
     {
         public AlunoMap()
         {
-            ToTable("public.Alunos");
+            ToTable("Alunos");
+            Map(x => x.Id).ToColumn("Id");
             Map(x => x.Nome).ToColumn("Nome");
         }
     }
